@@ -1,0 +1,16 @@
+[
+  {
+    "id": "task-1",
+    "title": "Setup project",
+    "priority": "high",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-2",
+    "title": "Build auth system",
+    "priority": "medium",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  }
+]
