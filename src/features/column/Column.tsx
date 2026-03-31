@@ -1,4 +1,5 @@
 import type { Column as ColumnType } from "../../types";
+import TaskCard from "../task/TaskCard";
 import { useTaskStore } from "../task/taskStore";
 
 type Props = {

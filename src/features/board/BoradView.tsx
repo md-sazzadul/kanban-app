@@ -1,3 +1,4 @@
+import Column from "../column/Column";
 import { useColumnStore } from "../column/columnStore";
 import { useBoardStore } from "./boardStore";
 
