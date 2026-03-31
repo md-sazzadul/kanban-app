@@ -20,6 +20,10 @@ const Column = ({ column }: Props) => {
           <TaskCard key={task.id} task={task} />
         ))}
       </div>
+
+      {columnTasks.length === 0 && (
+        <p className="text-sm text-gray-400">No tasks</p>
+      )}
     </div>
   );
 };
