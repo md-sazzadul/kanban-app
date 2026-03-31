@@ -3,8 +3,11 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useState } from "react";
+import Modal from "../../components/Modal";
 import type { Column as ColumnType } from "../../types";
 import TaskCard from "../task/TaskCard";
+import TaskForm from "../task/TaskForm";
 import { useTaskStore } from "../task/taskStore";
 
 type Props = {
@@ -12,6 +15,8 @@ type Props = {
 };
 
 const Column = ({ column }: Props) => {
+  const [open, setOpen] = useState(false);
+  const addTask = useTaskStore((s) => s.addTask);
   const tasks = useTaskStore((s) => s.tasks);
 
   const { setNodeRef } = useDroppable({
@@ -41,6 +46,28 @@ const Column = ({ column }: Props) => {
       {columnTasks.length === 0 && (
         <p className="text-sm text-gray-400">No tasks</p>
       )}
+
+      <button
+        onClick={() => setOpen(true)}
+        className="mt-3 text-sm text-blue-500"
+      >
+        + Add Task
+      </button>
+
+      <Modal isOpen={open} onClose={() => setOpen(false)}>
+        <TaskForm
+          onSubmit={(data) => {
+            addTask({
+              ...data,
+              id: crypto.randomUUID(),
+              columnId: column.id,
+              boardId: column.boardId,
+            });
+
+            setOpen(false);
+          }}
+        />
+      </Modal>
     </div>
   );
 };
