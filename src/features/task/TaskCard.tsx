@@ -1,4 +1,5 @@
-import { useDraggable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import type { Task } from "../../types";
 import { cn } from "../../utils/cn";
 
@@ -13,15 +14,15 @@ const priorityStyles = {
 };
 
 const TaskCard = ({ task }: Props) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: task.id,
-  });
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: task.id,
+    });
 
-  const style = transform
-    ? {
-        transform: `translate(${transform.x}px, ${transform.y}px)`,
-      }
-    : undefined;
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   return (
     <div
