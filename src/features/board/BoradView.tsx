@@ -9,6 +9,7 @@ const BoardView = () => {
   const columns = useColumnStore((s) => s.columns);
   const loading = useBoardStore((s) => s.loading);
   const moveTask = useTaskStore((s) => s.moveTask);
+  const reorderTasks = useTaskStore((s) => s.reorderTasks);
 
   const filteredColumns = columns.filter(
     (col) => col.boardId === activeBoardId,
@@ -23,6 +24,10 @@ const BoardView = () => {
     const targetColumnId = over.id as string;
 
     moveTask(taskId, targetColumnId);
+
+    if (active.id !== over.id) {
+      reorderTasks(active.id as string, over.id as string);
+    }
   };
 
   if (loading) return <div className="p-10">Loading...</div>;
