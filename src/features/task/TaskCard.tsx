@@ -41,6 +41,7 @@ const TaskCard = ({ task }: Props) => {
         style={style}
         className="bg-white dark:bg-gray-700 p-3 rounded shadow cursor-pointer"
         onClick={() => setOpen(true)}
+        onPointerDown={(e) => e.stopPropagation()}
       >
         <h3 className="font-medium">{task.title}</h3>
 

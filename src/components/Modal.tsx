@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -7,6 +7,15 @@ type Props = {
 };
 
 const Modal = ({ isOpen, onClose, children }: Props) => {
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
   if (!isOpen) return null;
 
   return (
