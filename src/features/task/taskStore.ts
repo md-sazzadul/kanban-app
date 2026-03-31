@@ -5,6 +5,7 @@ import type { Task } from "../../types";
 type TaskStore = {
   tasks: Task[];
   searchQuery: string;
+  priorityFilter: "all" | "low" | "medium" | "high";
   fetchTasks: () => Promise<void>;
 
   moveTask: (taskId: string, columnId: string) => void;
@@ -15,12 +16,14 @@ type TaskStore = {
   deleteTask: (taskId: string) => void;
 
   setSearchQuery: (query: string) => void;
+  setPriorityFilter: (priority: "all" | "low" | "medium" | "high") => void;
   getFilteredTasks: () => Task[];
 };
 
 export const useTaskStore = create<TaskStore>((set, get) => ({
   tasks: [],
   searchQuery: "",
+  priorityFilter: "all",
 
   fetchTasks: async () => {
     const tasks = await getTasks();
@@ -63,14 +66,28 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
 
   setSearchQuery: (query) => set({ searchQuery: query }),
 
-  getFilteredTasks: () => {
-    const { tasks, searchQuery } = get();
+  setPriorityFilter: (priority) => set({ priorityFilter: priority }),
 
-    if (!searchQuery.trim()) {
-      return tasks;
+  getFilteredTasks: () => {
+    const { tasks, searchQuery, priorityFilter } = get();
+
+    let filteredTasks = tasks;
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filteredTasks = filteredTasks.filter((task) =>
+        task.title.toLowerCase().includes(query),
+      );
     }
 
-    const query = searchQuery.toLowerCase();
-    return tasks.filter((task) => task.title.toLowerCase().includes(query));
+    // Filter by priority
+    if (priorityFilter !== "all") {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority === priorityFilter,
+      );
+    }
+
+    return filteredTasks;
   },
 }));

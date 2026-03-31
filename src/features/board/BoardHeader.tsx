@@ -1,3 +1,4 @@
+import PriorityFilter from "../filter/priorityFilter";
 import SearchBar from "../search/SearchBar";
 import { useBoardStore } from "./boardStore";
 
@@ -24,6 +25,7 @@ const BoardHeader = () => {
         ))}
       </div>
       <SearchBar />
+      <PriorityFilter />
     </div>
   );
 };

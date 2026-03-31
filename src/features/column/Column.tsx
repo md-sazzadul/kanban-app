@@ -19,17 +19,31 @@ const Column = ({ column }: Props) => {
   const addTask = useTaskStore((s) => s.addTask);
   const getFilteredTasks = useTaskStore((s) => s.getFilteredTasks);
   const searchQuery = useTaskStore((s) => s.searchQuery);
+  const priorityFilter = useTaskStore((s) => s.priorityFilter);
 
   const { setNodeRef } = useDroppable({
     id: column.id,
   });
 
-  // Get filtered tasks based on search query
+  // Get filtered tasks based on search query and priority filter
   const allFilteredTasks = getFilteredTasks();
 
   const columnTasks = allFilteredTasks.filter(
     (task) => task.columnId === column.id,
   );
+
+  const getEmptyMessage = () => {
+    if (searchQuery && priorityFilter !== "all") {
+      return `No ${priorityFilter} priority tasks matching "${searchQuery}"`;
+    }
+    if (searchQuery) {
+      return `No tasks matching "${searchQuery}"`;
+    }
+    if (priorityFilter !== "all") {
+      return `No ${priorityFilter} priority tasks`;
+    }
+    return "No tasks";
+  };
 
   return (
     <div
@@ -55,9 +69,7 @@ const Column = ({ column }: Props) => {
       </div>
 
       {columnTasks.length === 0 && (
-        <p className="text-sm text-gray-400">
-          {searchQuery ? "No matching tasks" : "No tasks"}
-        </p>
+        <p className="text-sm text-gray-400">{getEmptyMessage()}</p>
       )}
 
       <button
