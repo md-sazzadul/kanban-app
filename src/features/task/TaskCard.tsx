@@ -1,3 +1,4 @@
+import { useDraggable } from "@dnd-kit/core";
 import type { Task } from "../../types";
 import { cn } from "../../utils/cn";
 
@@ -12,8 +13,24 @@ const priorityStyles = {
 };
 
 const TaskCard = ({ task }: Props) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task.id,
+  });
+
+  const style = transform
+    ? {
+        transform: `translate(${transform.x}px, ${transform.y}px)`,
+      }
+    : undefined;
+
   return (
-    <div className="bg-white dark:bg-gray-700 p-3 rounded shadow cursor-pointer">
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
+      className="bg-white dark:bg-gray-700 p-3 rounded shadow cursor-pointer"
+    >
       <h3 className="font-medium">{task.title}</h3>
 
       <span
