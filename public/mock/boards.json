@@ -1,6 +1,4 @@
 [
-  {
-    "id": "board-1",
-    "title": "My First Board"
-  }
+  { "id": "board-1", "title": "Development Board" },
+  { "id": "board-2", "title": "Marketing Board" }
 ]

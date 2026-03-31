@@ -12,5 +12,205 @@
     "priority": "medium",
     "columnId": "col-2",
     "boardId": "board-1"
+  },
+  {
+    "id": "task-3",
+    "title": "Design landing page",
+    "priority": "low",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-4",
+    "title": "Create API layer",
+    "priority": "high",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-5",
+    "title": "Implement drag & drop",
+    "priority": "high",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-6",
+    "title": "Write unit tests",
+    "priority": "medium",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-7",
+    "title": "Fix login bug",
+    "priority": "high",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-8",
+    "title": "Add dark mode",
+    "priority": "medium",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-9",
+    "title": "Optimize performance",
+    "priority": "high",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-10",
+    "title": "Deploy to Vercel",
+    "priority": "low",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+
+  {
+    "id": "task-11",
+    "title": "Implement search feature",
+    "priority": "medium",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-12",
+    "title": "Create reusable components",
+    "priority": "high",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-13",
+    "title": "Refactor codebase",
+    "priority": "medium",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-14",
+    "title": "Add error handling",
+    "priority": "high",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-15",
+    "title": "Improve UI spacing",
+    "priority": "low",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+
+  {
+    "id": "task-16",
+    "title": "Integrate API endpoints",
+    "priority": "high",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-17",
+    "title": "Add loading skeleton",
+    "priority": "low",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-18",
+    "title": "Setup routing system",
+    "priority": "medium",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-19",
+    "title": "Add accessibility improvements",
+    "priority": "medium",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-20",
+    "title": "Fix drag glitch",
+    "priority": "high",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+
+  {
+    "id": "task-21",
+    "title": "Create dashboard layout",
+    "priority": "high",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-22",
+    "title": "Add task modal",
+    "priority": "medium",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-23",
+    "title": "Test drag across columns",
+    "priority": "medium",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-24",
+    "title": "Implement filters",
+    "priority": "high",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-25",
+    "title": "Code review",
+    "priority": "low",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+
+  {
+    "id": "task-26",
+    "title": "Improve responsiveness",
+    "priority": "medium",
+    "columnId": "col-1",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-27",
+    "title": "Add animations",
+    "priority": "low",
+    "columnId": "col-2",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-28",
+    "title": "Fix UI bugs",
+    "priority": "high",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-29",
+    "title": "Document project",
+    "priority": "medium",
+    "columnId": "col-3",
+    "boardId": "board-1"
+  },
+  {
+    "id": "task-30",
+    "title": "Prepare for interview demo",
+    "priority": "high",
+    "columnId": "col-2",
+    "boardId": "board-1"
   }
 ]
