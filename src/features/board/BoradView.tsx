@@ -5,10 +5,13 @@ import { useBoardStore } from "./boardStore";
 const BoardView = () => {
   const activeBoardId = useBoardStore((s) => s.activeBoardId);
   const columns = useColumnStore((s) => s.columns);
+  const loading = useBoardStore((s) => s.loading);
 
   const filteredColumns = columns.filter(
     (col) => col.boardId === activeBoardId,
   );
+
+  if (loading) return <div className="p-10">Loading...</div>;
 
   return (
     <div className="flex gap-4 p-6 overflow-x-auto h-full">
