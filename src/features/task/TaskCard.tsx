@@ -21,6 +21,7 @@ const TaskCard = ({ task }: Props) => {
   const [open, setOpen] = useState(false);
   const updateTask = useTaskStore((s) => s.updateTask);
   const deleteTask = useTaskStore((s) => s.deleteTask);
+  const searchQuery = useTaskStore((s) => s.searchQuery);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -32,6 +33,28 @@ const TaskCard = ({ task }: Props) => {
     transition,
   };
 
+  // Highlight search matches
+  const highlightText = (text: string, query: string) => {
+    if (!query.trim()) return text;
+    const parts = text.split(new RegExp(`(${query})`, "gi"));
+    return (
+      <>
+        {parts.map((part, index) =>
+          part.toLowerCase() === query.toLowerCase() ? (
+            <mark
+              key={index}
+              className="bg-yellow-300 dark:bg-yellow-600 text-gray-900 dark:text-white"
+            >
+              {part}
+            </mark>
+          ) : (
+            part
+          ),
+        )}
+      </>
+    );
+  };
+
   return (
     <>
       <div
@@ -39,11 +62,13 @@ const TaskCard = ({ task }: Props) => {
         {...listeners}
         {...attributes}
         style={style}
-        className="bg-white dark:bg-gray-700 p-3 rounded shadow cursor-pointer"
+        className="bg-white dark:bg-gray-700 p-3 rounded shadow cursor-pointer hover:shadow-lg transition-shadow"
         onClick={() => setOpen(true)}
         onPointerDown={(e) => e.stopPropagation()}
       >
-        <h3 className="font-medium">{task.title}</h3>
+        <h3 className="font-medium">
+          {highlightText(task.title, searchQuery)}
+        </h3>
 
         <span
           className={cn(
@@ -65,8 +90,11 @@ const TaskCard = ({ task }: Props) => {
         />
 
         <button
-          onClick={() => deleteTask(task.id)}
-          className="mt-3 text-red-500"
+          onClick={() => {
+            deleteTask(task.id);
+            setOpen(false);
+          }}
+          className="mt-3 text-red-500 hover:text-red-600"
         >
           Delete Task
         </button>

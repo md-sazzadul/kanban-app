@@ -4,6 +4,7 @@ import type { Task } from "../../types";
 
 type TaskStore = {
   tasks: Task[];
+  searchQuery: string;
   fetchTasks: () => Promise<void>;
 
   moveTask: (taskId: string, columnId: string) => void;
@@ -12,10 +13,14 @@ type TaskStore = {
   addTask: (task: Task) => void;
   updateTask: (task: Task) => void;
   deleteTask: (taskId: string) => void;
+
+  setSearchQuery: (query: string) => void;
+  getFilteredTasks: () => Task[];
 };
 
-export const useTaskStore = create<TaskStore>((set) => ({
+export const useTaskStore = create<TaskStore>((set, get) => ({
   tasks: [],
+  searchQuery: "",
 
   fetchTasks: async () => {
     const tasks = await getTasks();
@@ -55,4 +60,17 @@ export const useTaskStore = create<TaskStore>((set) => ({
     set((state) => ({
       tasks: state.tasks.filter((t) => t.id !== taskId),
     })),
+
+  setSearchQuery: (query) => set({ searchQuery: query }),
+
+  getFilteredTasks: () => {
+    const { tasks, searchQuery } = get();
+
+    if (!searchQuery.trim()) {
+      return tasks;
+    }
+
+    const query = searchQuery.toLowerCase();
+    return tasks.filter((task) => task.title.toLowerCase().includes(query));
+  },
 }));

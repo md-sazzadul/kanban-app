@@ -1,3 +1,4 @@
+import SearchBar from "../search/SearchBar";
 import { useBoardStore } from "./boardStore";
 
 const BoardHeader = () => {
@@ -6,18 +7,23 @@ const BoardHeader = () => {
   const setActiveBoard = useBoardStore((s) => s.setActiveBoard);
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-900 shadow flex gap-4">
-      {boards.map((b) => (
-        <button
-          key={b.id}
-          onClick={() => setActiveBoard(b.id)}
-          className={`px-3 py-1 rounded ${
-            activeBoardId === b.id ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          {b.title}
-        </button>
-      ))}
+    <div className="bg-white dark:bg-gray-900 shadow">
+      <div className="p-4 flex gap-4 border-b border-gray-200 dark:border-gray-700">
+        {boards.map((b) => (
+          <button
+            key={b.id}
+            onClick={() => setActiveBoard(b.id)}
+            className={`px-3 py-1 rounded ${
+              activeBoardId === b.id
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+            }`}
+          >
+            {b.title}
+          </button>
+        ))}
+      </div>
+      <SearchBar />
     </div>
   );
 };
