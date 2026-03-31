@@ -8,6 +8,10 @@ type TaskStore = {
 
   moveTask: (taskId: string, columnId: string) => void;
   reorderTasks: (activeId: string, overId: string) => void;
+
+  addTask: (task: Task) => void;
+  updateTask: (task: Task) => void;
+  deleteTask: (taskId: string) => void;
 };
 
 export const useTaskStore = create<TaskStore>((set) => ({
@@ -34,4 +38,21 @@ export const useTaskStore = create<TaskStore>((set) => ({
 
       return { tasks: newTasks };
     }),
+
+  addTask: (task) =>
+    set((state) => ({
+      tasks: [...state.tasks, task],
+    })),
+
+  updateTask: (updatedTask) =>
+    set((state) => ({
+      tasks: state.tasks.map((t) =>
+        t.id === updatedTask.id ? updatedTask : t,
+      ),
+    })),
+
+  deleteTask: (taskId) =>
+    set((state) => ({
+      tasks: state.tasks.filter((t) => t.id !== taskId),
+    })),
 }));
