@@ -17,28 +17,42 @@ const BoardView = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-
     if (!over) return;
-
-    const taskId = active.id as string;
-    const targetColumnId = over.id as string;
-
-    moveTask(taskId, targetColumnId);
-
-    if (active.id !== over.id) {
+    moveTask(active.id as string, over.id as string);
+    if (active.id !== over.id)
       reorderTasks(active.id as string, over.id as string);
-    }
   };
 
-  if (loading) return <div className="p-10">Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3.5 h-[calc(100vh-130px)] text-black/35 dark:text-white/35 text-sm">
+        {/* Spinner — keyframe animation requires custom CSS */}
+        <div className="board-spinner w-6 h-6 rounded-full border-2 border-[rgba(79,110,247,0.2)] border-t-[#4f6ef7]" />
+        <span>Loading board…</span>
+        <style>{`
+          @keyframes spin { to { transform: rotate(360deg); } }
+          .board-spinner { animation: spin 0.7s linear infinite; }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
-      <div className="flex gap-4 p-6 overflow-x-auto h-full">
+      <div className="flex gap-3.5 p-5 h-[calc(100vh-130px)] items-start overflow-x-auto board-scrollbar">
         {filteredColumns.map((col) => (
           <Column key={col.id} column={col} />
         ))}
       </div>
+
+      {/* Horizontal scrollbar styling — not achievable with Tailwind utility classes */}
+      <style>{`
+        .board-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.15) transparent; }
+        .board-scrollbar::-webkit-scrollbar { height: 6px; }
+        .board-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+        .dark .board-scrollbar { scrollbar-color: rgba(255,255,255,0.1) transparent; }
+        .dark .board-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+      `}</style>
     </DndContext>
   );
 };
