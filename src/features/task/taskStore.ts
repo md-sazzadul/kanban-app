@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { getTasks } from "../../services/task";
 import type { Task } from "../../types";
 
@@ -20,74 +21,83 @@ type TaskStore = {
   getFilteredTasks: () => Task[];
 };
 
-export const useTaskStore = create<TaskStore>((set, get) => ({
-  tasks: [],
-  searchQuery: "",
-  priorityFilter: "all",
+export const useTaskStore = create<TaskStore>()(
+  persist(
+    (set, get) => ({
+      tasks: [],
+      searchQuery: "",
+      priorityFilter: "all",
 
-  fetchTasks: async () => {
-    const tasks = await getTasks();
-    set({ tasks });
-  },
+      fetchTasks: async () => {
+        const tasks = await getTasks();
+        set({ tasks });
+      },
 
-  moveTask: (taskId, columnId) =>
-    set((state) => ({
-      tasks: state.tasks.map((t) => (t.id === taskId ? { ...t, columnId } : t)),
-    })),
+      moveTask: (taskId, columnId) =>
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === taskId ? { ...t, columnId } : t,
+          ),
+        })),
 
-  reorderTasks: (activeId, overId) =>
-    set((state) => {
-      const oldIndex = state.tasks.findIndex((t) => t.id === activeId);
-      const newIndex = state.tasks.findIndex((t) => t.id === overId);
+      reorderTasks: (activeId, overId) =>
+        set((state) => {
+          const oldIndex = state.tasks.findIndex((t) => t.id === activeId);
+          const newIndex = state.tasks.findIndex((t) => t.id === overId);
 
-      const newTasks = [...state.tasks];
-      const [moved] = newTasks.splice(oldIndex, 1);
-      newTasks.splice(newIndex, 0, moved);
+          const newTasks = [...state.tasks];
+          const [moved] = newTasks.splice(oldIndex, 1);
+          newTasks.splice(newIndex, 0, moved);
 
-      return { tasks: newTasks };
+          return { tasks: newTasks };
+        }),
+
+      addTask: (task) =>
+        set((state) => ({
+          tasks: [...state.tasks, task],
+        })),
+
+      updateTask: (updatedTask) =>
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === updatedTask.id ? updatedTask : t,
+          ),
+        })),
+
+      deleteTask: (taskId) =>
+        set((state) => ({
+          tasks: state.tasks.filter((t) => t.id !== taskId),
+        })),
+
+      setSearchQuery: (query) => set({ searchQuery: query }),
+
+      setPriorityFilter: (priority) => set({ priorityFilter: priority }),
+
+      getFilteredTasks: () => {
+        const { tasks, searchQuery, priorityFilter } = get();
+
+        let filteredTasks = tasks;
+
+        if (searchQuery.trim()) {
+          const query = searchQuery.toLowerCase();
+          filteredTasks = filteredTasks.filter((task) =>
+            task.title.toLowerCase().includes(query),
+          );
+        }
+
+        if (priorityFilter !== "all") {
+          filteredTasks = filteredTasks.filter(
+            (task) => task.priority === priorityFilter,
+          );
+        }
+
+        return filteredTasks;
+      },
     }),
-
-  addTask: (task) =>
-    set((state) => ({
-      tasks: [...state.tasks, task],
-    })),
-
-  updateTask: (updatedTask) =>
-    set((state) => ({
-      tasks: state.tasks.map((t) =>
-        t.id === updatedTask.id ? updatedTask : t,
-      ),
-    })),
-
-  deleteTask: (taskId) =>
-    set((state) => ({
-      tasks: state.tasks.filter((t) => t.id !== taskId),
-    })),
-
-  setSearchQuery: (query) => set({ searchQuery: query }),
-
-  setPriorityFilter: (priority) => set({ priorityFilter: priority }),
-
-  getFilteredTasks: () => {
-    const { tasks, searchQuery, priorityFilter } = get();
-
-    let filteredTasks = tasks;
-
-    // Filter by search query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filteredTasks = filteredTasks.filter((task) =>
-        task.title.toLowerCase().includes(query),
-      );
-    }
-
-    // Filter by priority
-    if (priorityFilter !== "all") {
-      filteredTasks = filteredTasks.filter(
-        (task) => task.priority === priorityFilter,
-      );
-    }
-
-    return filteredTasks;
-  },
-}));
+    {
+      name: "kanban-task-ui",
+      // Only persist the filter choice — tasks are always re-fetched, search is ephemeral
+      partialize: (state) => ({ priorityFilter: state.priorityFilter }),
+    },
+  ),
+);
