@@ -17,10 +17,22 @@ const BoardView = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    if (!over) return;
-    moveTask(active.id as string, over.id as string);
-    if (active.id !== over.id)
-      reorderTasks(active.id as string, over.id as string);
+    if (!over || active.id === over.id) return;
+
+    const tasks = useTaskStore.getState().tasks;
+    const activeTask = tasks.find((t) => t.id === active.id);
+    if (!activeTask) return;
+
+    const overTask = tasks.find((t) => t.id === over.id);
+    const targetColumnId = overTask ? overTask.columnId : (over.id as string);
+
+    // Only update columnId if the task actually changed columns
+    if (activeTask.columnId !== targetColumnId) {
+      moveTask(active.id as string, targetColumnId);
+    }
+
+    // Always reorder (handles same-column reordering too)
+    reorderTasks(active.id as string, over.id as string);
   };
 
   if (loading) {
