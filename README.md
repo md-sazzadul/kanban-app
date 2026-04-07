@@ -1,69 +1,145 @@
-# React + TypeScript + Vite
+# Kanban Board App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-featured, production-quality Kanban board built with React 19, TypeScript, and modern tooling. Designed to demonstrate real-world frontend architecture, UI/UX polish, and clean engineering practices.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38BDF8?logo=tailwindcss&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Live Demo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+> **Credentials:** `test@test.com` / `123456`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Drag & Drop** — Smooth card reordering within and across columns powered by `@dnd-kit`
+- **Authentication** — Session-persisted login with protected routes
+- **Task Management** — Create, edit, and delete tasks via modal forms with validation
+- **Priority System** — Low / Medium / High priority labels with visual color coding
+- **Search** — Real-time task filtering with keyword highlighting
+- **Priority Filter** — Filter tasks across all columns by priority level
+- **Dark / Light Mode** — System-aware theme with manual toggle and `localStorage` persistence
+- **Multiple Boards** — Tab-based navigation between independent boards
+- **Responsive Design** — Mobile-friendly layout with custom scrollbars and adaptive UI
+
+---
+
+## Tech Stack
+
+| Layer            | Technology                          |
+| ---------------- | ----------------------------------- |
+| Framework        | React 19                            |
+| Language         | TypeScript 5.8 (strict mode)        |
+| Styling          | Tailwind CSS v4                     |
+| State Management | Zustand 5 with `persist` middleware |
+| Routing          | React Router v7                     |
+| Drag & Drop      | @dnd-kit/core + @dnd-kit/sortable   |
+| HTTP Client      | Axios                               |
+| Validation       | Zod                                 |
+| Build Tool       | Vite 7                              |
+| Linting          | ESLint 9 + typescript-eslint        |
+
+---
+
+## Architecture
+
+The project follows a **feature-sliced** folder structure, keeping concerns separated and files easy to locate:
+
+```
+src/
+├── app/               # App-level initializers and layout wrappers
+├── components/        # Shared UI components (Modal, ThemeToggle)
+├── context/           # React context definitions
+├── features/
+│   ├── auth/          # Login state and store
+│   ├── board/         # Board header, board view, board store
+│   ├── column/        # Column component and store
+│   ├── filter/        # Priority filter UI
+│   ├── search/        # Search bar UI
+│   └── task/          # Task card, task form, task store
+├── hooks/             # Custom React hooks (useTheme)
+├── pages/             # Route-level page components
+├── provider/          # ThemeProvider
+├── routes/            # Router config and ProtectedRoute guard
+├── services/          # API layer (Axios wrappers)
+├── types/             # Shared TypeScript types
+└── utils/             # Utility helpers
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Key Design Decisions
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Zustand over Redux** — Lightweight global state without boilerplate; `persist` middleware handles localStorage sync cleanly
+- **Feature-first folders** — Co-locates each feature's component, store, and logic, making the codebase scalable as it grows
+- **Service layer** — All API calls live in `/services`, keeping components decoupled from data-fetching concerns
+- **Zod validation** — Form validation at the boundary keeps invalid state out of the store entirely
+- **Controlled filtering** — `getFilteredTasks` is a store selector that composes search and priority filters, keeping derived state in one place
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- npm
+
+### Installation
+
+```bash
+git clone https://github.com/md-sazzadul/kanban-app.git
+cd kanban-app
+npm install
+npm run dev
 ```
+
+Open [http://localhost:5173](http://localhost:5173) and log in with the demo credentials above.
+
+### Available Scripts
+
+```bash
+npm run dev       # Start development server
+npm run build     # Type-check and build for production
+npm run preview   # Preview the production build locally
+npm run lint      # Run ESLint
+```
+
+---
+
+## Implementation Highlights
+
+### Drag & Drop
+
+Tasks support drag-and-drop reordering within a column and movement between columns. The `DndContext` wraps the board, and each column is both a `Droppable` zone and a `SortableContext`. The `handleDragEnd` handler cleanly separates the "move to column" and "reorder within list" operations.
+
+### State Persistence
+
+Board UI state (active board, priority filter) is persisted to `localStorage` via Zustand's `persist` middleware. Tasks and boards are always re-fetched from the API on load, while only lightweight UI preferences are stored locally.
+
+### Search with Highlighting
+
+The search bar filters tasks in real time across all columns simultaneously. Matching substrings are wrapped in a `<mark>` element with a highlight style — implemented as a pure function that splits on the query regex and maps to React nodes.
+
+### Protected Routing
+
+`ProtectedRoute` reads auth state from Zustand and redirects unauthenticated users to `/login`. No session data is exposed to unprotected routes.
+
+### Theme System
+
+A `ThemeContext` + `ThemeProvider` pattern applies the `dark` class to `<html>`, enabling Tailwind's dark mode variant globally. The preference is persisted and initialized from `localStorage`, with a fallback to `prefers-color-scheme`.
+
+---
+
+## Data Layer
+
+The app currently uses static JSON files served from `/public/mock/` as a stand-in for a REST API. The service layer (`src/services/`) is structured identically to how it would work against a real backend — swapping the base URL is the only change needed to connect to a live API.
+
+---
+
+## Author
+
+Built by [Md Sazzadul Islam] · [md.sazzadul.islam15@gmail.com] · [LinkedIn](https://www.linkedin.com/in/md-sazzadul-islam15/) · [Portfolio](https://yourportfolio.com)
