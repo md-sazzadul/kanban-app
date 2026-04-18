@@ -1,0 +1,35 @@
+{
+  "name": "Kanban App",
+  "short_name": "Kanban",
+  "description": "A fast, intuitive Kanban board for managing tasks with drag-and-drop, priority filters, and dark mode.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#4f6ef7",
+  "orientation": "any",
+  "categories": ["productivity", "utilities"],
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Board",
+      "short_name": "Board",
+      "description": "Go directly to the Kanban board",
+      "url": "/",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
