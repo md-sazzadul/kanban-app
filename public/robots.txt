@@ -1,0 +1,9 @@
+# robots.txt for Kanban App
+# https://kanban-app-sazzad15.netlify.app/
+ 
+User-agent: *
+Allow: /
+Disallow: /login    # Auth page — no value for indexing
+ 
+# Sitemap location
+Sitemap: https://kanban-app-sazzad15.netlify.app/sitemap.xml
