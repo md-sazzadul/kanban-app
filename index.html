@@ -2,12 +2,223 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- ═══════════════════════════════════════════
+         VIEWPORT & CORE META
+    ═══════════════════════════════════════════ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kanban App</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- ═══════════════════════════════════════════
+         PRIMARY META TAGS
+    ═══════════════════════════════════════════ -->
+    <title>Kanban App — Visual Task Management for Modern Teams</title>
+    <meta
+      name="description"
+      content="A fast, intuitive Kanban board for managing tasks with drag-and-drop, priority filters, real-time search, and dark mode. Built for modern teams."
+    />
+    <meta
+      name="keywords"
+      content="kanban, task management, project management, productivity, drag and drop, todo board"
+    />
+    <meta name="author" content="Md Sazzadul Islam" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="theme-color"
+      content="#0a0a0f"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+
+    <!-- ═══════════════════════════════════════════
+         CANONICAL
+    ═══════════════════════════════════════════ -->
+    <link rel="canonical" href="https://kanban-app-sazzad15.netlify.app/" />
+
+    <!-- ═══════════════════════════════════════════
+         OPEN GRAPH / SOCIAL
+    ═══════════════════════════════════════════ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kanban App" />
+    <meta property="og:title" content="Kanban App — Visual Task Management" />
+    <meta
+      property="og:description"
+      content="A fast, intuitive Kanban board with drag-and-drop, priority filters, real-time search, and dark mode for modern teams."
+    />
+    <meta
+      property="og:url"
+      content="https://kanban-app-sazzad15.netlify.app/"
+    />
+    <meta
+      property="og:image"
+      content="https://kanban-app-sazzad15.netlify.app/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Kanban App board view showing task columns"
+    />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- ═══════════════════════════════════════════
+         TWITTER CARD
+    ═══════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kanban App — Visual Task Management" />
+    <meta
+      name="twitter:description"
+      content="Drag-and-drop Kanban board with priority filters, real-time search, and dark mode for modern teams."
+    />
+    <meta
+      name="twitter:image"
+      content="https://kanban-app.example.com/og-image.png"
+    />
+    <meta name="twitter:image:alt" content="Kanban App board view" />
+
+    <!-- ═══════════════════════════════════════════
+         FAVICONS & APP ICONS
+    ═══════════════════════════════════════════ -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- ═══════════════════════════════════════════
+         PERFORMANCE: DNS PREFETCH & PRECONNECT
+         (Add real CDN/API origins here in production)
+    ═══════════════════════════════════════════ -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+
+    <!-- ═══════════════════════════════════════════
+         PERFORMANCE: PRELOAD CRITICAL ASSETS
+         Vite injects the actual hashed filenames at build time.
+         These hints tell the browser to start fetching early.
+    ═══════════════════════════════════════════ -->
+    <!-- The main script module is injected by Vite below; add any
+         critical font or image preloads here if needed. -->
+
+    <!-- ═══════════════════════════════════════════
+         STRUCTURED DATA (JSON-LD)
+    ═══════════════════════════════════════════ -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Kanban App",
+        "description": "A fast, intuitive Kanban board for managing tasks with drag-and-drop, priority filters, real-time search, and dark mode.",
+        "url": "https://kanban-app-sazzad15.netlify.app/",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Drag and drop task management",
+          "Priority filtering",
+          "Real-time search",
+          "Dark and light mode",
+          "Multiple boards"
+        ],
+        "author": {
+          "@type": "Person",
+          "name": "Md Sazzadul Islam"
+        }
+      }
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+         INLINE CRITICAL CSS: PREVENT FOUC
+         Sets dark/light class before React hydrates.
+    ═══════════════════════════════════════════ -->
+    <style>
+      /* Block render of body until theme class is set to avoid flash */
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        margin: 0;
+        background: #fff;
+      }
+      .dark body {
+        background: #0d0d14;
+      }
+      /* Accessible skip link — visually hidden until focused */
+      .skip-link {
+        position: absolute;
+        top: -9999px;
+        left: 1rem;
+        z-index: 9999;
+        padding: 0.5rem 1rem;
+        background: #4f6ef7;
+        color: #fff;
+        border-radius: 0 0 6px 6px;
+        font-family: system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: top 0.1s;
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+      /* Prevent layout shift for root mount point */
+      #root {
+        min-height: 100vh;
+      }
+    </style>
+
+    <!-- ═══════════════════════════════════════════
+         THEME INIT SCRIPT: Runs before React to avoid FOUC.
+         Reads localStorage and sets .dark on <html> synchronously.
+    ═══════════════════════════════════════════ -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          var isDark = stored === "dark" || (!stored && prefersDark);
+          if (isDark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Accessibility: skip navigation link -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- React mounts here -->
+    <div
+      id="root"
+      role="application"
+      aria-label="Kanban Task Management Application"
+    ></div>
+
+    <!-- Vite entry point -->
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- noscript fallback -->
+    <noscript>
+      <p
+        style="
+          font-family: system-ui, sans-serif;
+          padding: 2rem;
+          text-align: center;
+        "
+      >
+        This application requires JavaScript. Please enable it in your browser
+        settings.
+      </p>
+    </noscript>
   </body>
 </html>
